@@ -8,6 +8,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 
+import { FormsModule } from '@angular/forms';
+import { ComponetsModule } from '../components/componets.module';
 
 
 @NgModule({
@@ -26,6 +28,9 @@ import { AppRoutingModule } from '../app-routing.module';
   imports: [
   CommonModule,
   SharedModule,
-  AppRoutingModule ],
+  AppRoutingModule,
+  FormsModule ,
+  ComponetsModule
+],
 })
 export class PagesModule { }
