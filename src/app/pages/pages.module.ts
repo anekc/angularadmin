@@ -30,7 +30,8 @@ import { ComponetsModule } from '../components/componets.module';
   SharedModule,
   AppRoutingModule,
   FormsModule ,
-  ComponetsModule
+  ComponetsModule,
+
 ],
 })
 export class PagesModule { }
