@@ -10,6 +10,7 @@ import { AppRoutingModule } from '../app-routing.module';
 
 import { FormsModule } from '@angular/forms';
 import { ComponetsModule } from '../components/componets.module';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 
 @NgModule({
@@ -18,12 +19,14 @@ import { ComponetsModule } from '../components/componets.module';
     Grafica1Component,
     ProgressComponent,
     DashboardComponent,
+    AccountSettingsComponent,
   ],
    exports: [
     PagesComponent,
     Grafica1Component,
     ProgressComponent,
     DashboardComponent,
+    AccountSettingsComponent
 ],
   imports: [
   CommonModule,
