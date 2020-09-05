@@ -10,3 +10,10 @@
     #themecolors .selector {
         cursor: pointer;
     }
+    
+    #google {
+        text-align: center;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+    }
