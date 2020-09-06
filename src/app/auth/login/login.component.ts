@@ -1,4 +1,4 @@
-import { Component , OnInit} from '@angular/core';
+import { Component , OnInit, NgZone} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit  {
 
   constructor(private router: Router,
               private fb: FormBuilder,
-              private usuarioService: UsuarioService) { }
+              private usuarioService: UsuarioService,
+              private ngZone: NgZone) { }
   ngOnInit(): void {
    this.renderButton();
   }
@@ -48,9 +49,6 @@ login = () => {
 
 }
 
-
-
-
 renderButton(){
   gapi.signin2.render('my-signin2', {
     'scope': 'profile email',
@@ -62,30 +60,32 @@ renderButton(){
   this.startApp();
 }
 
-startApp(){
-  gapi.load('auth2', () => {
-    // Retrieve the singleton for the GoogleAuth library and set up the client.
-    this.auth2 = gapi.auth2.init({
-      client_id: '195265579519-jded13qf2d0eujivt85ncsee90n2cu26.apps.googleusercontent.com',
-      cookiepolicy: 'single_host_origin',
+async startApp(){
 
-    });
-    this.attachSignin(document.getElementById('my-signin2'));
-  });
-}
-attachSignin(element) {
-  console.log(element.id);
-  this.auth2.attachClickHandler(element, {},
-      (googleUser) => {
-        const id_token = googleUser.getAuthResponse().id_token;
-        this.usuarioService.loginGoogle(id_token).subscribe(resp =>{
-               // Navegar al dashboard al dashboard
-        this.router.navigateByUrl('/');
+await this.usuarioService.googleInit();
+this.auth2 = this.usuarioService.auth2;
+this.attachSignin(document.getElementById('my-signin2'));
+  }
+
+  attachSignin(element){
+    console.log(element.id);
+    this.auth2.attachClickHandler(element, {},
+        (googleUser) => {
+          const id_token = googleUser.getAuthResponse().id_token;
+          this.usuarioService.loginGoogle(id_token)
+          .subscribe(resp => {
+                 // Navegar al dashboard al dashboard
+          this.ngZone.run(() => {
+          this.router.navigateByUrl('/');
+          });
+          });
+        }, (error) => {
+          alert(JSON.stringify(error, undefined, 2));
         });
-      }, (error) => {
-        alert(JSON.stringify(error, undefined, 2));
-      });
+  }
 }
-}
+
+
+
 
 
