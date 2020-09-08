@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RegisterForm } from '../interfaces/register-froms.interface';
 import { environment } from '../../environments/environment';
@@ -18,7 +18,8 @@ export class UsuarioService {
   public usuario: Usuario;
 
   constructor(private http: HttpClient,
-              private router: Router) {
+              private router: Router,
+              private ngZone: NgZone) {
   this.googleInit();
                }
 
