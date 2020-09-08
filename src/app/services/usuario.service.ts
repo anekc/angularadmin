@@ -7,6 +7,7 @@ declare const gapi: any;
 import { tap , map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { Usuario } from '../models/usuario.model';
 const base_url = environment.base_url;
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,20 @@ const base_url = environment.base_url;
 export class UsuarioService {
 
   public auth2: any;
+  public usuario: Usuario;
 
   constructor(private http: HttpClient,
               private router: Router) {
   this.googleInit();
                }
+
+  get token(){
+    return localStorage.getItem('token') || '';
+  }
+
+  get uid(){
+    return this.usuario.uid || '';
+  }
 
 
 googleInit(){
@@ -44,11 +54,16 @@ googleInit(){
       headers:  {
         'x-token': token
       }
-    }).pipe(tap( (resp: any)  => {
+    }).pipe(
+    map( (resp: any)  => {
+      const { email, google, nombre, role, uid, img = ''} = resp.usuario;
+      this.usuario = new Usuario (nombre, email, '', img , google, role, uid );
       localStorage.setItem('token', resp.token);
-    }), map(resp =>  true
-    ), catchError(error => of (false))
+      return true;
+    }),
+     catchError(error => of (false))
     );
+
     }
 
 
@@ -62,6 +77,18 @@ crearUsuario(formData: RegisterForm){
                   })
 );
 
+}
+
+actualizarPerfil(data: { email: string, nombre: string, role: string} ) {
+  data = {
+  ...data,
+  role: this.usuario.role
+  };
+  return this.http.put(`${base_url}/usuarios/${this.uid}` , data, {
+    headers:  {
+      'x-token': this.token
+    }
+  });
 }
 
 loginUsuario(formData: LoginForm){
@@ -96,4 +123,6 @@ loginUsuario(formData: LoginForm){
    this.router.navigateByUrl('/login');
     });
   }
+
+
 }

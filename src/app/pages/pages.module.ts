@@ -8,11 +8,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponetsModule } from '../components/componets.module';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { RxjsComponent } from './rxjs/rxjs.component';
     AccountSettingsComponent,
     PromesasComponent,
     RxjsComponent,
+    PerfilComponent,
   ],
    exports: [
     PagesComponent,
@@ -38,6 +40,7 @@ import { RxjsComponent } from './rxjs/rxjs.component';
   AppRoutingModule,
   FormsModule ,
   ComponetsModule,
+  ReactiveFormsModule
 
 ],
 })

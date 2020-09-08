@@ -8,9 +8,9 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img src="./assets/images/users/1.jpg" alt="user" /><span class="hide-menu">Alejandro Arteaga </span></a>
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.imagenUrl" alt="user" /><span class="hide-menu">{{usuario.nombre}}</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a routerLink="">My Profile </a></li>
+                        <li><a routerLinkActive="active" routerLink="perfil">My Profile </a></li>
                         <li><a routerLink="">My Balance</a></li>
                         <li><a routerLink="">Inbox</a></li>
                         <li><a routerLink="settings">Account Setting</a></li>

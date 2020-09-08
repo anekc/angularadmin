@@ -8,12 +8,14 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { PerfilComponent } from './perfil/perfil.component';
 const routes: Routes = [
   {path: 'dashboard',
    component: PagesComponent,
    canActivate: [AuthGuard],
    children: [
     {path: '', component: DashboardComponent, data: {titulo: 'Dashboard'} },
+    {path: 'perfil' , component: PerfilComponent, data: {titulo: 'Perfil'}},
     {path: 'grafica1' , component: Grafica1Component, data: {titulo: 'Gráfica'}},
     {path: 'progress', component: ProgressComponent, data: {titulo: 'Progreso'}},
     {path: 'settings', component: AccountSettingsComponent, data: {titulo: 'Ajustes de Cuenta'}},
