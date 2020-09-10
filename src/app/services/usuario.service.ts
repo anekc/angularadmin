@@ -8,6 +8,8 @@ import { tap , map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.model';
+import { CargarUsuario } from '../interfaces/cargar-usuarios.interface';
+import Swal from 'sweetalert2';
 const base_url = environment.base_url;
 @Injectable({
   providedIn: 'root'
@@ -23,12 +25,20 @@ export class UsuarioService {
   this.googleInit();
                }
 
-  get token(){
+  get token(): string{
     return localStorage.getItem('token') || '';
   }
 
-  get uid(){
+  get uid(): string{
     return this.usuario.uid || '';
+  }
+
+  get headers(){
+  return {
+    headers: {
+      'x-token': this.token
+    }
+  };
   }
 
 
@@ -81,10 +91,12 @@ crearUsuario(formData: RegisterForm){
 }
 
 actualizarPerfil(data: { email: string, nombre: string, role: string} ) {
-  data = {
-  ...data,
-  role: this.usuario.role
+
+  data = { ...data,
+    role: this.usuario.role
+
   };
+
   return this.http.put(`${base_url}/usuarios/${this.uid}` , data, {
     headers:  {
       'x-token': this.token
@@ -125,5 +137,30 @@ loginUsuario(formData: LoginForm){
     });
   }
 
+  cargarUsuarios(desde: number= 0){
+// http://localhost:3005/api/usuarios?desde=0
+const url = `${base_url}/usuarios?desde=${desde}`;
+return this.http.get<CargarUsuario>(url, this.headers)
+.pipe(
+  map(resp => {
+    const usuarios = resp.usuarios.map(
+      user => new Usuario(user.nombre, user.email, '' , user.img, user.google , user.role , user.uid));
+    return {
+      total: resp.total,
+      usuarios
+    }
+  }));
+  }
+
+  eliminarUsuario(usuario: Usuario){
+  // http://localhost:3005/api/usuarios/5f4985265489b12098d27732
+  const url = `${base_url}/usuarios/${usuario.uid}`;
+  return this.http.delete(url, this.headers);
+  }
+
+  actualizarRole = (usuario: Usuario ) => {
+
+    return this.http.put(`${base_url}/usuarios/${usuario.uid}`, usuario, this.headers);
+  }
 
 }

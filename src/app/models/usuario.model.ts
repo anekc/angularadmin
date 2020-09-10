@@ -13,17 +13,15 @@ export class Usuario {
     ) {}
 
 
-   get imagenUrl(){
-
-    if (this.img.includes('https')){
+  get imagenUrl() {
+    if (!this.img) {
+      return `${base_url}/upload/usuarios/no-image`;
+    } else if (this.img.includes('https')) {
       return this.img;
-    }
-
-    // http://localhost:3005/api/upload/usuarios/no-image.jpg
-    if (this.img){
-      return  `${base_url}/upload/usuarios/${this.img}`;
+    } else if (this.img) {
+      return `${base_url}/upload/usuarios/${this.img}`;
     } else {
-        return  `${base_url}/upload/usuarios/no-image`;
+      return `${base_url}/upload/usuarios/no-image`;
     }
-   }
+  }
 }

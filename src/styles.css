@@ -24,3 +24,18 @@
         height: 200px;
         align-content: center;
     }
+    
+    .w100 {
+        width: 100px
+    }
+    
+    .w140 {
+        width: 140px
+    }
+    
+    .avatar {
+        border: 1px solid gray;
+        width: 75px;
+        height: 75px;
+        border-radius: 100%;
+    }
