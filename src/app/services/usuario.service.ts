@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.model';
 import { CargarUsuario } from '../interfaces/cargar-usuarios.interface';
-import Swal from 'sweetalert2';
+
 const base_url = environment.base_url;
 @Injectable({
   providedIn: 'root'
@@ -130,13 +130,17 @@ loginUsuario(formData: LoginForm){
 
  }
 
- logout =  () => {
-   localStorage.removeItem('token');
-   this.auth2.signOut().then(() => {
-   this.router.navigateByUrl('/login');
-    });
-  }
+ logout() {
+  localStorage.removeItem('token');
 
+  this.auth2.signOut().then(() => {
+
+    this.ngZone.run(() => {
+      this.router.navigateByUrl('/login');
+    });
+  });
+
+}
   cargarUsuarios(desde: number= 0){
 // http://localhost:3005/api/usuarios?desde=0
 const url = `${base_url}/usuarios?desde=${desde}`;
@@ -148,7 +152,7 @@ return this.http.get<CargarUsuario>(url, this.headers)
     return {
       total: resp.total,
       usuarios
-    }
+    };
   }));
   }
 

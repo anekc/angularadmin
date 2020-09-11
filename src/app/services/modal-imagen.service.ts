@@ -9,7 +9,7 @@ export class ModalImagenService {
   private _ocultarModal = true;
   public tipo: 'usuarios'| 'medicos' | 'hospitales';
   public id: string;
-  public img = 'no-img';
+  public img: string;
 
   public nuevaIMagen: EventEmitter<string> = new EventEmitter<string>();
 
@@ -17,7 +17,7 @@ export class ModalImagenService {
     return this._ocultarModal;
   }
 
-  abrirModal(tipo: 'usuarios'| 'medicos' | 'hospitales', id: string, img?: string){
+  abrirModal(tipo: 'usuarios'| 'medicos' | 'hospitales', id: string, img: string= 'no-img'){
     this._ocultarModal = false;
     this.tipo = tipo;
     this.id = id;
