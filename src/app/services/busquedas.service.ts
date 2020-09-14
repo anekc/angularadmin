@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { Usuario } from '../models/usuario.model';
+import { Hospital } from '../models/hospital.model';
 
 const base_url = environment.base_url;
 
@@ -27,7 +28,10 @@ export class BusquedasService {
 private transfromarUsuarios(resultados: any[]): Usuario[]{
   return resultados.map(
     user => new Usuario(user.nombre, user.email, '' , user.img, user.google , user.role , user.uid));
+  }
 
+private transfromarHospitales(resultados: any[]): Hospital[]{
+  return resultados;
 }
     buscar(tipo: 'usuarios' |'medicos' | 'hospitales', termino: string = ''){
       const url = `${base_url}/todo/coleccion/${tipo}/${termino}`;
@@ -37,6 +41,8 @@ private transfromarUsuarios(resultados: any[]): Usuario[]{
           switch (tipo) {
             case 'usuarios':
               return this.transfromarUsuarios(resp.resultados);
+            case 'hospitales':
+              return this.transfromarHospitales(resp.resultados);
             default:
               return [];
           }
