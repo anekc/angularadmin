@@ -33,6 +33,10 @@
         width: 140px
     }
     
+    .w240 {
+        width: 240px
+    }
+    
     .avatar {
         border: 1px solid gray;
         width: 75px;
