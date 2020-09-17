@@ -34,4 +34,9 @@ this.medicos = resp.medicos;
 this.hospitales = resp. hospitales;
     });
   }
+
+
+  abrirMedico(medico: Medico){
+
+  }
 }

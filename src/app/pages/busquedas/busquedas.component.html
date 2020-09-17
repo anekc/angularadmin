@@ -38,7 +38,7 @@
                     <p></p>
                     <p class="mb-0"></p>
                 </div>
-                <div class="table-responsive" *ngIf="usuarios.length > 0">
+                <div class="table-responsive" *ngIf="medicos.length > 0">
                     <table class="table">
                         <thead>
                             <tr>
@@ -49,9 +49,12 @@
                         <tbody>
                             <tr *ngFor="let medico of medicos">
                                 <td>
-                                    <img class="avatar" [src]="medico.img | imagen: 'medicos'">
+                                    <img class="avatar" [src]="medico.img | imagen: 'medicos' ">
                                 </td>
-                                <td>{{medico.nombre}}</td>
+                                <td>
+                                    <a class="cursor" [routerLink]="['/dashboard/medicos', medico._id]">
+                                        {{medico.nombre}}</a>
+                                </td>
 
                         </tbody>
                     </table>
@@ -60,17 +63,17 @@
         </div>
     </div>
 
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Hospitales</h4>
-                <div class="alert alert-info" role="alert" *ngIf="hospitales.length === 0">
-                    <h4 class="alert-heading">No hay hospitales con ese termino</h4>
+    <div class="col ">
+        <div class="card ">
+            <div class="card-body ">
+                <h4 class="card-title ">Hospitales</h4>
+                <div class="alert alert-info " role="alert " *ngIf="hospitales.length === 0">
+                    <h4 class="alert-heading ">No hay hospitales con ese termino</h4>
                     <p></p>
-                    <p class="mb-0"></p>
+                    <p class="mb-0 "></p>
                 </div>
 
-                <div class="table-responsive" *ngIf="hospitales.length > 0">
+                <div class="table-responsive " *ngIf="hospitales.length> 0">
                     <table class="table">
                         <thead>
                             <tr>

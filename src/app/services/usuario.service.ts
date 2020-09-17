@@ -29,6 +29,10 @@ export class UsuarioService {
     return localStorage.getItem('token') || '';
   }
 
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' {
+return this.usuario.role;
+  }
+
   get uid(): string{
     return this.usuario.uid || '';
   }
@@ -41,6 +45,11 @@ export class UsuarioService {
   };
   }
 
+guardarLocalStorage(token: string, menu: any){
+  localStorage.setItem('token', token );
+  localStorage.setItem('menu', JSON.stringify(menu));
+
+}
 
 googleInit(){
 
@@ -69,7 +78,7 @@ googleInit(){
     map( (resp: any)  => {
       const { email, google, nombre, role, uid, img = ''} = resp.usuario;
       this.usuario = new Usuario (nombre, email, '', img , google, role, uid );
-      localStorage.setItem('token', resp.token);
+      this.guardarLocalStorage(resp.token, resp.menu);
       return true;
     }),
      catchError(error => of (false))
@@ -84,7 +93,7 @@ crearUsuario(formData: RegisterForm){
                  .pipe(
                   tap((resp: any ) => {
                     // guardamos token en el local Storage
-                    localStorage.setItem('token', resp.token);
+                    this.guardarLocalStorage(resp.token, resp.menu);
                   })
 );
 
@@ -111,7 +120,7 @@ loginUsuario(formData: LoginForm){
                     .pipe(
                      tap((resp: any ) => {
                       // guardamos token en el local Storage
-                      localStorage.setItem('token', resp.token);
+                      this.guardarLocalStorage(resp.token, resp.menu);
                     })
                   );
 
@@ -124,7 +133,7 @@ loginUsuario(formData: LoginForm){
                     .pipe(
                      tap((resp: any ) => {
                       // guardamos token en el local Storage
-                      localStorage.setItem('token', resp.token);
+                      this.guardarLocalStorage(resp.token, resp.menu);
                     })
                   );
 
@@ -132,6 +141,9 @@ loginUsuario(formData: LoginForm){
 
  logout() {
   localStorage.removeItem('token');
+  localStorage.removeItem('menu');
+
+  // TODO borrar menu
 
   this.auth2.signOut().then(() => {
 

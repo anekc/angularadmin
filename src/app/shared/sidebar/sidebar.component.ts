@@ -11,12 +11,12 @@ import { Usuario } from '../../models/usuario.model';
 })
 export class SidebarComponent implements OnInit {
   public usuario: Usuario;
-  menuItems: any[];
+  // menuItems: any[];
 
-  constructor(private sbService: SidebarService,
+  constructor(public sbService: SidebarService,
               private usuaS: UsuarioService) {
    this.usuario = usuaS.usuario;
-   this.menuItems = sbService.menu;
+  //  this.menuItems = sbService.menu;
    }
 
   ngOnInit(): void {
